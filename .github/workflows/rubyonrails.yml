@@ -1,0 +1,32 @@
+name: "Ruby on Rails CI"
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: "db/test.sqlite3"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
+        with:
+          bundler-cache: true
+      - name: Set up database schema
+        run: bin/rails db:schema:load
+      - name: Rspec-rails install
+        run: bin/bundle add rspec-rails
+      # Add or replace test runners here
+      - name: Load rspec repo
+        run: git clone git@github.com:examinertest/testrspecs.git
+      - name: Removing users specs
+        run: rm -rf spec/
+      - name: Moving spec folder
+        run: mv testrspecs/spec .
+      - name: Run tests
+        run: rspec spec
