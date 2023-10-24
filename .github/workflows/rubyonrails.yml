@@ -19,6 +19,8 @@ jobs:
           bundler-cache: true
       - name: Set up database schema
         run: bin/rails db:schema:load
+      - name: Removing froze
+        run: bin/bundle config set frozen false
       - name: Rspec-rails install
         run: bin/bundle add rspec-rails
       # Add or replace test runners here
