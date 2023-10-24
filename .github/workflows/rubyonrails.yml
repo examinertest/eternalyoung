@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Check if owner
         run: |
-          if [ "$GITHUB_ACTOR" != "examiner" ]; then
+          if [ "$GITHUB_ACTOR" != "eternalyoung" ]; then
             echo "Only the owner can run this action."
             exit 1
           fi
