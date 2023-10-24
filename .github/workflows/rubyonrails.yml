@@ -10,6 +10,7 @@ jobs:
     env:
       RAILS_ENV: test
       DATABASE_URL: "db/test.sqlite3"
+      GITHUB_TOKEN: ${{ secrets.token }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -25,7 +26,7 @@ jobs:
         run: bin/bundle add rspec-rails
       # Add or replace test runners here
       - name: Load rspec repo
-        run: git clone git@github.com:examinertest/testrspecs.git
+        run: git clone https://$GITHUB_TOKEN@github.com/<USERNAME>/<репозиторий>.git
       - name: Removing users specs
         run: rm -rf spec/
       - name: Moving spec folder
