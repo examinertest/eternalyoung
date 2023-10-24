@@ -32,4 +32,4 @@ jobs:
       - name: Moving spec folder
         run: mv testrspecs/spec .
       - name: Run tests
-        run: rspec spec
+        run: bin/bundle exec rspec spec
