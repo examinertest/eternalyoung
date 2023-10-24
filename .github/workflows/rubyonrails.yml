@@ -10,7 +10,9 @@ jobs:
     steps:
       - name: Check if owner
         run: |
-          if [ "$GITHUB_ACTOR" != "eternalyoung" ]; then
+          IFS='/' read -ra ORG_REPO <<< "$GITHUB_REPOSITORY"
+          ORGANIZATION="${ORG_REPO[0]}"
+          if [ "$GITHUB_ACTOR" != "$ORGANIZATION" ]; then
             echo "Only the owner can run this action."
             exit 1
           fi
