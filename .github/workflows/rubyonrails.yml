@@ -26,7 +26,7 @@ jobs:
         run: bin/bundle add rspec-rails
       # Add or replace test runners here
       - name: Load rspec repo
-        run: git clone https://$GITHUB_TOKEN@github.com/<USERNAME>/<репозиторий>.git
+        run: git clone https://$GITHUB_TOKEN@github.com/examinertest/testrspecs.git
       - name: Removing users specs
         run: rm -rf spec/
       - name: Moving spec folder
