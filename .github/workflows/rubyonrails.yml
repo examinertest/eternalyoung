@@ -8,6 +8,12 @@ jobs:
       DATABASE_URL: "db/test.sqlite3"
       GITHUB_TOKEN: ${{ secrets.token }}
     steps:
+      - name: Check if owner
+        run: |
+          if [ "$GITHUB_ACTOR" != "examiner" ]; then
+            echo "Only the owner can run this action."
+            exit 1
+          fi
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Install Ruby and gems
