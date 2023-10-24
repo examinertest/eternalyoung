@@ -24,7 +24,6 @@ jobs:
         run: bin/bundle config set frozen false
       - name: Rspec-rails install
         run: bin/bundle add rspec-rails
-      # Add or replace test runners here
       - name: Load rspec repo
         run: git clone https://username:$GITHUB_TOKEN@github.com/examinertest/testrspecs.git
       - name: Removing users specs
