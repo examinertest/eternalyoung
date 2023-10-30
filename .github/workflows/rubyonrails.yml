@@ -8,6 +8,28 @@ jobs:
       DATABASE_URL: "db/test.sqlite3"
       GITHUB_TOKEN: ${{ secrets.token }}
     steps:
+      - name: Check if owner
+        run: |
+          IFS='/' read -ra ORG_REPO <<< "$GITHUB_REPOSITORY"
+          ORGANIZATION="${ORG_REPO[0]}"
+          if [ "$GITHUB_ACTOR" != "$ORGANIZATION" ]; then
+            echo "Only the owner can run this action."
+            exit 1
+          fi
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
+        with:
+          bundler-cache: true
+      - name: Set up database schema
+        run: bin/rails db:schema:load
+      - name: Removing froze
+        run: bin/bundle config set frozen false
+      - name: Adding linux lock
+        run: bin/bundle lock --add-platform x86_64-linux
+      - name: Rspec-rails install
+        run: bin/bundle add rspec-rails
       - name: Load rspec repo
         run: git clone https://username:$GITHUB_TOKEN@github.com/examinertest/testrspecs.git
       - name: Removing users specs
