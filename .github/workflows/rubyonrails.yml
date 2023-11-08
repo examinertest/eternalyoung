@@ -11,7 +11,7 @@ jobs:
       - name: Check if owner
         run: |
           IFS='/' read -ra ORG_REPO <<< "$GITHUB_REPOSITORY"
-          ORGANIZATION="examinetest1"
+          ORGANIZATION= 'examinetest1[bot]'
           if [ "$GITHUB_ACTOR" != "$ORGANIZATION" ]; then
             echo "Only the owner can run this action."
             exit 1
